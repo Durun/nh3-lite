@@ -53,8 +53,10 @@ dependencies {
 }
 
 sourceSets.main.configure {
-    java.srcDir("src/nh3")
-    java.srcDir("lib/MPAnalyzer/src")
+    java.srcDir(files(
+            "src",
+            "lib/MPAnalyzer/src"
+    ))
 }
 
 
@@ -83,4 +85,26 @@ tasks.register("updateLib") {
             gitUrl=Ext.mpanalyzerUrl
     )
 }
-tasks.get("build").dependsOn(tasks.get("updateLib"))
+tasks.get("compileJava").dependsOn(tasks.get("updateLib"))
+
+
+/**
+ * Creates fat-jar/uber-jar.
+ */
+val fatJar = tasks.register<Jar>("fatJar") {
+    archiveClassifier.set("fatJar")
+
+    from(sourceSets.main.get().output)
+
+    dependsOn(configurations.runtimeClasspath)
+    from({
+        configurations.runtimeClasspath.get().filter { it.name.endsWith("jar") }.map { zipTree(it) }
+    })
+    //include(arrayListOf("**/*.class"))
+    exclude("**/META-INF/**/*")
+
+    manifest {
+        attributes("Main-Class" to application.mainClassName)
+    }
+}
+tasks.get("build").dependsOn(fatJar)
