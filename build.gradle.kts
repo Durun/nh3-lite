@@ -8,7 +8,8 @@
 
 object Ext {
     const val mpanalyzerDir = "lib/MPAnalyzer"
-    const val mpanalyzerUrl = "https://github.com/YoshikiHigo/MPAnalyzer.git"
+    // forked from https://github.com/YoshikiHigo/MPAnalyzer.git
+    const val mpanalyzerUrl = "git@github.com:Durun/mpanalyzer-lite.git"
 }
 
 plugins {
