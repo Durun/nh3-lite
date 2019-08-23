@@ -6,6 +6,10 @@
  * User Manual available at https://docs.gradle.org/5.5.1-20190724234647+0000/userguide/tutorial_java_projects.html
  */
 
+object Ext {
+    const val mpanalyzerDir = "lib/MPAnalyzer"
+    const val mpanalyzerUrl = "https://github.com/YoshikiHigo/MPAnalyzer.git"
+}
 
 plugins {
     // Apply the java plugin to add support for Java
@@ -41,6 +45,7 @@ dependencies {
     implementation("org.apache.poi:poi-ooxml:$poiVersion")
     implementation("org.xerial:sqlite-jdbc:$sqliteVersion")
     implementation("org.tmatesoft.svnkit:svnkit:$svnkitVersion")
+    implementation(files("${Ext.mpanalyzerDir}/lib/commentremover/CR.jar"))
 
     // Use JUnit test framework
     testImplementation("junit:junit:4.12")
@@ -73,8 +78,8 @@ fun updateGitRepo(
 
 tasks.register("updateLib") {
     updateGitRepo(
-            path="lib/MPAnalyzer",
-            gitUrl="https://github.com/YoshikiHigo/MPAnalyzer.git"
+            path=Ext.mpanalyzerDir,
+            gitUrl=Ext.mpanalyzerUrl
     )
 }
 tasks.get("build").dependsOn(tasks.get("updateLib"))
