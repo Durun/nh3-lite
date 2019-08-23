@@ -26,13 +26,21 @@ repositories {
 }
 
 dependencies {
+    val commonscliVersion = "1.2"
+    val jgitVersion = "4.4.0+"
+    val poiVersion = "3.12"
+    val sqliteVersion = "3.8.10.1"
+    val svnkitVersion = "1.8.10"
+
     // This dependency is used by the application.
     implementation("com.google.guava:guava:27.1-jre")
-    implementation(fileTree(mapOf(
-            "dir" to "lib",
-            "include" to arrayOf("**/*.jar")
-    )))
 
+    implementation("commons-cli:commons-cli:$commonscliVersion")
+    implementation("org.eclipse.jgit:org.eclipse.jgit:$jgitVersion")
+    implementation("org.apache.poi:poi:$poiVersion")
+    implementation("org.apache.poi:poi-ooxml:$poiVersion")
+    implementation("org.xerial:sqlite-jdbc:$sqliteVersion")
+    implementation("org.tmatesoft.svnkit:svnkit:$svnkitVersion")
 
     // Use JUnit test framework
     testImplementation("junit:junit:4.12")
