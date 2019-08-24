@@ -31,11 +31,11 @@ repositories {
 }
 
 dependencies {
-    val commonscliVersion = "1.2"
-    val jgitVersion = "4.4.0+"
+    val commonscliVersion = "1.4"
+    val jgitVersion = "4.5.6+"
     val poiVersion = "3.12"
-    val sqliteVersion = "3.8.10.1"
-    val svnkitVersion = "1.8.10"
+    val sqliteVersion = "3.28.0"
+    val svnkitVersion = "1.10.1"
 
     // This dependency is used by the application.
     implementation("com.google.guava:guava:27.1-jre")
