@@ -1,0 +1,3 @@
+[submodule "lib/MPAnalyzer"]
+	path = lib/MPAnalyzer
+	url = https://github.com/Durun/MPAnalyzer.git

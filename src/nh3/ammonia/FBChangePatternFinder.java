@@ -678,7 +678,7 @@ public class FBChangePatternFinder {
               }
             });
         final List<Statement> statements =
-            StringUtility.splitToStatements(text.toString(), LANGUAGE.JAVA);
+            StringUtility.splitToStatements(text.toString(), LANGUAGE.valueOf("JAVA"));
         contents.add(statements);
       } catch (final SVNException | NullPointerException e) {
       }

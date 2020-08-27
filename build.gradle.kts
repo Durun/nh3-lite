@@ -8,8 +8,6 @@
 
 object Ext {
     const val mpanalyzerDir = "lib/MPAnalyzer"
-    // forked from https://github.com/YoshikiHigo/MPAnalyzer.git
-    const val mpanalyzerUrl = "git@github.com:Durun/mpanalyzer-lite.git"
 }
 
 plugins {
@@ -28,8 +26,11 @@ repositories {
     // You can declare any Maven/Ivy/file repository here.
     jcenter()
     mavenCentral()
+    maven("https://jitpack.io")
 }
 
+tasks.get("compileJava").dependsOn(gradle.includedBuild("CPAnalyzer").task(":publish"))
+tasks.get("clean").dependsOn(gradle.includedBuild("CPAnalyzer").task(":clean"))
 dependencies {
     val commonscliVersion = "1.4"
     val jgitVersion = "4.5.6+"
@@ -46,7 +47,8 @@ dependencies {
     implementation("org.apache.poi:poi-ooxml:$poiVersion")
     implementation("org.xerial:sqlite-jdbc:$sqliteVersion")
     implementation("org.tmatesoft.svnkit:svnkit:$svnkitVersion")
-    implementation(files("${Ext.mpanalyzerDir}/lib/commentremover/CR.jar"))
+    implementation("com.github.YoshikiHigo:CommentRemover:v0.1.1")
+    implementation("com.github.YoshikiHigo:CPAnalyzer:nitro-0.1")
 
     // Use JUnit test framework
     testImplementation("junit:junit:4.12")
@@ -54,8 +56,7 @@ dependencies {
 
 sourceSets.main.configure {
     java.srcDir(files(
-            "src",
-            "lib/MPAnalyzer/src"
+            "src"
     ))
 }
 
@@ -78,14 +79,6 @@ fun updateGitRepo(
     }
     repo.pull(mapOf("branch" to branch))
 }
-
-tasks.register("updateLib") {
-    updateGitRepo(
-            path=Ext.mpanalyzerDir,
-            gitUrl=Ext.mpanalyzerUrl
-    )
-}
-tasks.get("compileJava").dependsOn(tasks.get("updateLib"))
 
 
 /**
