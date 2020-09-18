@@ -19,6 +19,8 @@ plugins {
 
     // Grgit
     id("org.ajoberstar.grgit").version("3.1.1")
+
+    id("com.github.johnrengelman.shadow").version("5.2.0")
 }
 
 repositories {
@@ -79,35 +81,3 @@ fun updateGitRepo(
     }
     repo.pull(mapOf("branch" to branch))
 }
-
-
-/**
- * Creates fat-jar/uber-jar.
- */
-fun fatJar(mainClassName: String) = tasks.register<Jar>("fatJar-$mainClassName") {
-    archiveClassifier.set("${mainClassName}-fatJar")
-
-    from(sourceSets.main.get().output)
-
-    dependsOn(configurations.runtimeClasspath)
-    from({
-        configurations.runtimeClasspath.get().filter { it.name.endsWith("jar") }.map { zipTree(it) }
-    })
-    //include(arrayListOf("**/*.class"))
-    exclude("**/META-INF/**/*")
-
-    manifest {
-        attributes("Main-Class" to mainClassName)
-    }
-}
-val fatJarMain = fatJar(application.mainClassName)
-val fatJarDBMaker = fatJar("nh3.ammonia.BugFixDBMaker")
-val fatJarDBMakerWithoutFB = fatJar("nh3.ammonia.BugFixDBMakerWithoutFB")
-val fatJarAll = tasks.register("fatJarAll") {
-    dependsOn(
-            fatJarMain,
-            fatJarDBMaker,
-            fatJarDBMakerWithoutFB
-    )
-}
-tasks.get("build").dependsOn(fatJarAll)
