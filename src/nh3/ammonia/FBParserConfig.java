@@ -11,6 +11,7 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.PosixParser;
+import yoshikihigo.cpanalyzer.CPAConfig;
 import yoshikihigo.cpanalyzer.LANGUAGE;
 
 public class FBParserConfig {
@@ -255,6 +256,14 @@ public class FBParserConfig {
       e.printStackTrace();
       System.exit(0);
     }
+
+    // initialize CPAnalyzer settings
+    String[] cpaArgs = {
+            "-db", SINGLETON.getDATABASE(),
+            "-lang", SINGLETON.getLANGUAGE().toString(),
+            "-gitrepo", SINGLETON.getGITREPOSITORY()
+    };
+    CPAConfig.initialize(cpaArgs);
 
     return true;
   }
