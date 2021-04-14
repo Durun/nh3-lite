@@ -9,5 +9,3 @@
 
 rootProject.buildFileName = "build.gradle.kts"
 rootProject.name = "Ammonia"
-
-includeBuild("lib/MPAnalyzer")

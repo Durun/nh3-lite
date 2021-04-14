@@ -6,10 +6,6 @@
  * User Manual available at https://docs.gradle.org/5.5.1-20190724234647+0000/userguide/tutorial_java_projects.html
  */
 
-object Ext {
-    const val mpanalyzerDir = "lib/MPAnalyzer"
-}
-
 plugins {
     // Apply the java plugin to add support for Java
     java
@@ -29,10 +25,9 @@ repositories {
     jcenter()
     mavenCentral()
     maven("https://jitpack.io")
+    mavenLocal()
 }
 
-tasks.get("compileJava").dependsOn(gradle.includedBuild("CPAnalyzer").task(":publish"))
-tasks.get("clean").dependsOn(gradle.includedBuild("CPAnalyzer").task(":clean"))
 dependencies {
     val commonscliVersion = "1.4"
     val jgitVersion = "4.5.6+"
@@ -50,7 +45,7 @@ dependencies {
     implementation("org.xerial:sqlite-jdbc:$sqliteVersion")
     implementation("org.tmatesoft.svnkit:svnkit:$svnkitVersion")
     implementation("com.github.YoshikiHigo:CommentRemover:v0.1.1")
-    implementation("com.github.YoshikiHigo:CPAnalyzer:nitro-0.1")
+    implementation("com.github.YoshikiHigo:CPAnalyzer:0.1-SNAPSHOT")
 
     // Use JUnit test framework
     testImplementation("junit:junit:4.12")
